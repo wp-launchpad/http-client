@@ -10,9 +10,11 @@
     }
   ],
   "require": {
-    "psr/http-client": "^1.0"
+    "psr/http-client": "^1.0",
+    "httpsoft/http-message": "^1.0"
   },
   "require-dev": {
+    "brain/monkey": "^2.0",
     "phpunit/phpunit": "^7.5 || ^8 || ^9",
     "wp-media/phpunit": "^3.0"
   },
