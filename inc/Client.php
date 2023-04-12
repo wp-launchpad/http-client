@@ -39,6 +39,11 @@ class Client implements ClientInterface
         $headers = $request->getHeaders();
         $request->getProtocolVersion();
         $body = $request->getBody()->getContents();
+
+        if(! $request->getMethod()) {
+            throw new ClientException('The method is invalid');
+        }
+
         $args = [
             'method' => $request->getMethod(),
             'httpversion' => $request->getProtocolVersion(),
@@ -99,6 +104,10 @@ class Client implements ClientInterface
 
         if( is_wp_error( $response ) ) {
             return $this->responseFactory->createResponse($response->get_error_code(), $response->get_error_message());
+        }
+
+        if(! wp_remote_retrieve_response_code( $response )) {
+            throw new NetworkException('The request cannot be sent');
         }
 
         $response = $this->responseFactory->createResponse(wp_remote_retrieve_response_code( $response ), wp_remote_retrieve_response_message( $response ));
