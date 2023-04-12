@@ -97,7 +97,7 @@ class Client implements ClientInterface
 
     protected function generateResponse($response): ResponseInterface {
 
-        if(! is_array( $response )) {
+        if( is_wp_error( $response ) ) {
             return $this->responseFactory->createResponse($response->get_error_code(), $response->get_error_message());
         }
 
@@ -106,6 +106,12 @@ class Client implements ClientInterface
         $response_body = wp_remote_retrieve_body( $response );
         if($response_body) {
             $response->withBody($this->streamFactory->createStream($response_body));
+        }
+
+        $headers = wp_remote_retrieve_headers( $response );
+
+        foreach ($headers as $header => $value) {
+            $response->withHeader($header, $value);
         }
 
         return $response;
