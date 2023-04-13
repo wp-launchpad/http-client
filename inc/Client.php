@@ -3,6 +3,7 @@ namespace LaunchpadHTTPClient;
 
 use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\StreamFactory;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -14,18 +15,24 @@ class Client implements ClientInterface
 {
 
     /**
+     * Factory to generate Response.
+     *
      * @var ResponseFactoryInterface
      */
     protected $responseFactory;
 
     /**
+     * Factory to generate Stream.
+     *
      * @var StreamFactoryInterface
      */
     protected $streamFactory;
 
     /**
-     * @param ResponseFactoryInterface|null $responseFactory
-     * @param StreamFactoryInterface|null $streamFactory
+     * Instantiate the class.
+     *
+     * @param ResponseFactoryInterface|null $responseFactory Factory to generate Response.
+     * @param StreamFactoryInterface|null $streamFactory Factory to generate Stream.
      */
     public function __construct(ResponseFactoryInterface $responseFactory = null, StreamFactoryInterface $streamFactory = null)
     {
@@ -33,7 +40,15 @@ class Client implements ClientInterface
         $this->streamFactory = $streamFactory ?: new StreamFactory();
     }
 
-
+    /**
+     * Sends a PSR-7 request and returns a PSR-7 response.
+     *
+     * @param RequestInterface $request
+     *
+     * @return ResponseInterface
+     *
+     * @throws ClientExceptionInterface If an error happens while processing the request.
+     */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         $method = $request->getMethod();
