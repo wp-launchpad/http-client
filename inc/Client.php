@@ -36,19 +36,19 @@ class Client implements ClientInterface
 
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        $headers = $request->getHeaders();
-        $request->getProtocolVersion();
-        $body = $request->getBody()->getContents();
+        $method = $request->getMethod();
 
-        if(! $request->getMethod()) {
-            throw new ClientException('The method is invalid');
+        if(! $method) {
+            throw new RequestException('The method is invalid');
         }
 
+        $headers = $request->getHeaders();
+        $body = $request->getBody()->getContents();
+
         $args = [
-            'method' => $request->getMethod(),
+            'method' => $method,
             'httpversion' => $request->getProtocolVersion(),
         ];
-        $request->getRequestTarget();
 
         if($body) {
             $args['body'] = $body;
@@ -69,8 +69,10 @@ class Client implements ClientInterface
 
         $url = '';
 
-        if ($uri->getScheme() !== '') {
-            $url .= $uri->getScheme() . ':';
+        $scheme = $uri->getScheme();
+
+        if ( $scheme !== '') {
+            $url .= $scheme . ':';
         }
 
         $authority = $uri->getAuthority();
@@ -89,12 +91,16 @@ class Client implements ClientInterface
             }
         }
 
-        if ($uri->getQuery() !== '') {
-            $url .= '?' . $uri->getQuery();
+        $query = $uri->getQuery();
+
+        if ($query !== '') {
+            $url .= '?' . $query;
         }
 
-        if ($uri->getFragment() !== '') {
-            $url .= '#' . $uri->getFragment();
+        $fragment = $uri->getFragment();
+
+        if ($fragment !== '') {
+            $url .= '#' . $fragment;
         }
 
         return $url;

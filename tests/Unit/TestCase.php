@@ -3,8 +3,9 @@
 namespace LaunchpadHTTPClient\Tests\Unit;
 use ReflectionObject;
 use WPMedia\PHPUnit\Unit\TestCase as UnitTestCase;
+use Brain\Monkey;
 
-class TestCase extends UnitTestCase
+abstract class TestCase extends UnitTestCase
 {
     protected $config;
 
@@ -16,6 +17,12 @@ class TestCase extends UnitTestCase
             $this->loadTestDataConfig();
         }
 
+    }
+
+    protected function tearDown(): void
+    {
+        Monkey\tearDown();
+        parent::tearDown();
     }
 
     public function configTestData()
