@@ -131,19 +131,19 @@ class Client implements ClientInterface
             throw new NetworkException('The request cannot be sent');
         }
 
-        $response = $this->responseFactory->createResponse(wp_remote_retrieve_response_code( $response ), wp_remote_retrieve_response_message( $response ));
+        $psr_response = $this->responseFactory->createResponse(wp_remote_retrieve_response_code( $response ), wp_remote_retrieve_response_message( $response ));
 
         $response_body = wp_remote_retrieve_body( $response );
         if($response_body) {
-            $response->withBody($this->streamFactory->createStream($response_body));
+            $psr_response->withBody($this->streamFactory->createStream($response_body));
         }
 
         $headers = wp_remote_retrieve_headers( $response );
 
         foreach ($headers as $header => $value) {
-            $response->withHeader($header, $value);
+            $psr_response->withHeader($header, $value);
         }
 
-        return $response;
+        return $psr_response;
     }
 }
