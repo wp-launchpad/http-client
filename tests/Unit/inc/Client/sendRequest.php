@@ -105,10 +105,10 @@ class Test_SendRequest extends TestCase
         $this->responseFactory->expects()->createResponse($expected['response']['code'], $expected['response']['message'])->andReturn($this->response);
         Functions\expect('wp_remote_retrieve_body')->with($expected['response'])->andReturn($config['response']['body']);
         $this->streamFactory->expects()->createStream($expected['body'])->andReturn($this->response_stream);
-        $this->response->expects()->withBody($this->response_stream);
+        $this->response->expects()->withBody($this->response_stream)->andReturnSelf();
         Functions\expect('wp_remote_retrieve_headers')->with($expected['response'])->andReturn($config['response']['headers']);
         foreach ($expected['response']['headers'] as $header => $value) {
-            $this->response->expects()->withHeader($header, $value);
+            $this->response->expects()->withHeader($header, $value)->andReturnSelf();
         }
     }
 

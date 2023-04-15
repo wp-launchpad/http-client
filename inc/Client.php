@@ -141,13 +141,13 @@ class Client implements ClientInterface
 
         $response_body = wp_remote_retrieve_body( $response );
         if($response_body) {
-            $psr_response->withBody($this->streamFactory->createStream($response_body));
+            $psr_response = $psr_response->withBody($this->streamFactory->createStream($response_body));
         }
 
         $headers = wp_remote_retrieve_headers( $response );
 
         foreach ($headers as $header => $value) {
-            $psr_response->withHeader($header, $value);
+            $psr_response = $psr_response->withHeader($header, $value);
         }
 
         return $psr_response;
