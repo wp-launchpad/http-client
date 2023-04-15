@@ -9,7 +9,7 @@ return [
             'request' => [
                 'protocol' => '1.1',
                 'headers' => [
-                    'test' => 'value'
+                    'test' => ['value']
                 ],
                 'host' => [],
                 'body' => 'test',
@@ -54,7 +54,7 @@ return [
             'request' => [
                 'protocol' => '1.1',
                 'headers' => [
-                    'test' => 'value'
+                    'test' => ['value', 'value2']
                 ],
                 'host' => [],
                 'body' => 'test',
@@ -88,7 +88,7 @@ return [
                 "httpversion" => "1.1",
                 "body" => "test",
                 "headers" => [
-                    "test" => "value"
+                    "test" => "value;value2"
                 ]
             ],
             'url' => 'http://example.org/test?param=true#hash=value'
@@ -100,7 +100,7 @@ return [
             'request' => [
                 'protocol' => '1.1',
                 'headers' => [
-                    'test' => 'value'
+                    'test' => ['value']
                 ],
                 'host' => [],
                 'body' => 'test',
@@ -146,7 +146,7 @@ return [
             'request' => [
                 'protocol' => '1.1',
                 'headers' => [
-                    'test' => 'value'
+                    'test' => ['value']
                 ],
                 'host' => [],
                 'body' => 'test',
@@ -192,7 +192,7 @@ return [
             'request' => [
                 'protocol' => '1.1',
                 'headers' => [
-                    'test' => 'value'
+                    'test' => ['value']
                 ],
                 'host' => [],
                 'body' => 'test',

@@ -70,7 +70,13 @@ class Client implements ClientInterface
         }
 
         if(count($headers) > 0) {
-            $args['headers'] = $headers;
+            $wp_headers = [];
+
+            foreach ($headers as $header => $values) {
+                $wp_headers[$header] = implode(';', $values);
+            }
+
+            $args['headers'] = $wp_headers;
         }
 
         return $this->generateResponse(wp_remote_request($this->generateURL($request->getUri()), $args));
